@@ -85,6 +85,7 @@ impl Window {
                 lpszClassName: name.as_ptr(),
                 lpszMenuName: null_mut(),
                 hbrBackground: null_mut(),
+
             };
             RegisterClassW(&mut wndcls);
             res.window = CreateWindowExW(
