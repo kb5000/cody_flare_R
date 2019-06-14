@@ -3,17 +3,20 @@
 #[cfg(windows)] extern crate user32;
 #[cfg(windows)] extern crate kernel32;
 
-//use winapi::um;
 use winapi::um::winuser::*;
-//use winapi::um::wingdi::*;
 use winapi::um::libloaderapi::GetModuleHandleW;
-//use winapi::shared::minwindef::HINSTANCE;
+use winapi::shared::windef::*;
 use std::ffi::OsStr;
 use std::os::windows::ffi::OsStrExt;
 use std::iter::once;
 use std::ptr::null_mut;
 use std::io::Error;
 use std::mem;
+use super::super::utility::pos::Pos;
+
+static mut WINDOW_SIZE: [i32; 2] = [0, 0];
+static mut WINDOW_DSIZE: Pos = Pos {x: 10.0, y: 7.0};
+
 
 #[cfg(windows)]
 fn win_str(value: &str) -> Vec<u16> {
@@ -75,6 +78,7 @@ pub fn message_loop(window: &mut Window) -> bool {
             return false;
         }
         match msg {
+
             _ => {
                 TranslateMessage(&msg as *const MSG);
                 DispatchMessageW(&msg as *const MSG);
@@ -82,4 +86,9 @@ pub fn message_loop(window: &mut Window) -> bool {
         }
         true
     }
+}
+
+#[cfg(windows)]
+pub fn clear_display() {
+    //let rect: windef::RECT = windef::RECT
 }
